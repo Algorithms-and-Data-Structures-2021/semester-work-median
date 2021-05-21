@@ -4,62 +4,82 @@
 #include <string_view>  // string_view
 #include <chrono>       // high_resolution_clock, duration_cast, nanoseconds
 #include <sstream>      // stringstream
+#include <vector>
 
-// подключаем вашу структуру данных
-#include "data_structure.hpp"
+// подключаем алгоритм
+#include "algorithm.hpp"
 
 using namespace std;
-using namespace itis;
 
 // абсолютный путь до набора данных и папки проекта
 static constexpr auto kDatasetPath = string_view{PROJECT_DATASET_DIR};
 static constexpr auto kProjectPath = string_view{PROJECT_SOURCE_DIR};
 
-int main(int argc, char **argv) {
+//Путь к папке с наборами данных для заполнения
+const string setsPath = "C:/Users/Admin/Desktop/sets";
 
-  // Tip 1: входные аргументы позволяют более гибко контролировать работу вашей программы.
-  // Можете передать путь до входного/выходного тестового файла в качестве аргумента программы.
+// Сгенирировать наборы даннх : https://github.com/rthoor/generation.git
 
-  for (int index = 0; index < argc; index++) {
-    cout << "Arg: " << argv[index] << '\n';
-  }
 
-  // Tip 2: для перевода строки в число можете использовать функцию stoi (string to integer)
+//укажите названия папок с наборами данных, если они есть
+string folders[5] = {"/01/","/02/","/03/","/04/","/05/"};
 
-  // можете использовать функционал класса stringstream для обработки строки
-  auto ss = stringstream("0 1 2");  // передаете строку (входной аргумент или строку из файла) и обрабатываете ее
+//если их нет
+//string folders[1] = {"/"};
 
-  int number = 0;
-  ss >> number;  // number = 0
-  ss >> number;  // number = 1
-  ss >> number;  // number = 2
+//укажите названия файлов с наборами данных (без .csv)
+string files[8] = {"11", "51", "101", "501", "1001", "5001", "10001", "50001"};
 
-  // работа с набором данных
-  const auto path = string(kDatasetPath);
-  cout << "Path to the 'dataset/' folder: " << path << endl;
+//Путь к папке, куда нужно выгрузить результаты
+const string outputPath = "C:/Users/Admin/Desktop/results/";
 
-  auto input_file = ifstream(path + "/dataset-example.csv");
+// Ознакомтесь с директорией "results-path-example/results"
+// в папке выгруза результатов нужно будет реализовать похожую структуру,
+// опираясь на названия файлов в массиве files
 
-  if (input_file) {
-    // чтение и обработка набора данных ...
-  }
+// -----------------------------------
+// запускать main() (в самом низу)   |
+// -----------------------------------
 
-  // Контрольный тест: операции добавления, удаления, поиска и пр. над структурой данных
+//Вывод результатов
+void writeResults(string file, long time) {
+    // вывод результата
+    // не забудьте подготовить директорию
+    std::ofstream out(outputPath + file + "/results.txt", std::ios::app);
+    if (out.is_open()) {
+        out << time << std::endl;
+    }
+    out.close();
+}
 
-  // Tip 3: время работы программы (или участка кода) можно осуществить
-  // как изнутри программы (std::chrono), так и сторонними утилитами
+void goTest() {
+    for (auto file : files) {
+        for (auto folder : folders) {
+            for (int i = 0; i < 10; i++) { // i = сколько раз прогоняем один и тот же csv файл
+                auto input_file = ifstream(setsPath + folder + file + ".csv");
+                string line;
 
-  const auto time_point_before = chrono::steady_clock::now();
+                // Создание структуры
+                vector<int> array;
 
-  // здесь находится участок кода, время которого необходимо замерить
+                // добавление
+                while (getline(input_file, line, ',')) {
+                    array.push_back(stoi(line));
+                }
+                auto time_point_before = chrono::steady_clock::now();
+                itis::quickselect(array);
+                auto time_point_after = chrono::steady_clock::now();
+                auto time_diff_insert = time_point_after - time_point_before;
+                long time = chrono::duration_cast<chrono::nanoseconds>(time_diff_insert).count();
+                array.clear();
+                writeResults(file, time);
+            }
+            std::cout << "test for " + setsPath + folder + file + " ended" + "\n";
+        }
+    }
+}
 
-  const auto time_point_after = chrono::steady_clock::now();
-
-  // переводим время в наносекунды
-  const auto time_diff = time_point_after - time_point_before;
-  const auto time_elapsed_ns = chrono::duration_cast<chrono::nanoseconds>(time_diff).count();
-
-  cout << "Time elapsed (ns): " << time_elapsed_ns << '\n';
-
-  return 0;
+int main() {
+    goTest();
+    return 0;
 }
