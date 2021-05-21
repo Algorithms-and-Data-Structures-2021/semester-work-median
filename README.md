@@ -103,3 +103,4 @@ cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo && cmake --config RelWithDebInfo --bu
 
 ## Источники
 - [Статья на Хабре](https://habr.com/ru/post/346930/)
+- [Видео на YouTube](https://www.youtube.com/watch?v=sNtu2oGDRvU)
