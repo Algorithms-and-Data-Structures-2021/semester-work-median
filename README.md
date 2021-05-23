@@ -55,7 +55,7 @@ _Описание основных частей семестрового про�
 возможности IDE):
 
 ```shell
-git clone https://github.com/Algorithms-and-Data-Structures-2021/semester-work-aa-tree-fixiki.git
+git clone https://github.com/Algorithms-and-Data-Structures-2021/semester-work-median.git
 ```
 
 Для ручной сборки проекта в терминале введите:
