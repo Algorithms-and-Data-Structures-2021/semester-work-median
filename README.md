@@ -62,7 +62,7 @@ git clone https://github.com/Algorithms-and-Data-Structures-2021/semester-work-a
 
 ```shell
 # переход в папку с проектом
-cd C:\Users\username\asd-projects\semester-work-aa-tree-fixiki
+cd C:\Users\username\asd-projects\semester-work-median
 
 # создание папки для файлов сборки (чтобы не засорять папку с проектом) 
 mkdir -p build && cd build 
