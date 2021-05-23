@@ -31,19 +31,15 @@ namespace itis {
             for (int i = 0; i < array.size(); i++) {
                 if (array.at(i) <= array.at(pivot)) {
                     lesser_els.push_back(array.at(i));
-                    //std::cout << array.at(i) << " added to les" << "\n";
                 } else {
                     great_els.push_back(array.at(i));
-                    //std::cout << array.at(i) << " added to gr" << "\n";
                 }
             }
             array.clear();
             if (med <= lesser_els.size()) {
-                //std::cout << "zapusk less " << med << "\n";
                 return quickselect(lesser_els, med, pivot);
 
             } else {
-                //std::cout << "zapusk gr " << med - lesser_els.size() << "\n";
                 return quickselect(great_els, med - lesser_els.size(), pivot);
             }
         }
@@ -57,26 +53,20 @@ namespace itis {
         }
         else {
             int med = array.size() / 2 + 1;
-            //std::cout << med << "\n";
             int pivot = random(array.size(), -1);
-            //std::cout << "pivot = " << pivot << "\n";
             std::vector<int> lesser_els;
             std::vector<int> great_els;
             for (int i = 0; i < array.size(); i++) {
                 if (array.at(i) <= array.at(pivot)) {
                     lesser_els.push_back(array.at(i));
-                    //std::cout << array.at(i) << " added to les" << "\n";
                 } else {
                     great_els.push_back(array.at(i));
-                    //std::cout << array.at(i) << " added to gr" << "\n";
                 }
             }
             array.clear();
             if (med <= lesser_els.size()) {
-                //std::cout << "zapusk less " << med << "\n";
                 return quickselect(lesser_els, med, pivot);
             } else {
-                //std::cout << "zapusk gr " << med - lesser_els.size() << "\n";
                 return quickselect(great_els, med - lesser_els.size(), pivot);
             }
         }
