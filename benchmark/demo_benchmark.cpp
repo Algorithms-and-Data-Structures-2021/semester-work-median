@@ -72,9 +72,10 @@ void goTest() {
                 auto time_diff_insert = time_point_after - time_point_before;
                 long time = chrono::duration_cast<chrono::nanoseconds>(time_diff_insert).count();
                 array.clear();
+
+                // запись результатов
                 writeResults(file, time);
             }
-            std::cout << "test for " + setsPath + folder + file + " ended" + "\n";
         }
     }
 }
